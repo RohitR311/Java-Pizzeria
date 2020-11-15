@@ -1,0 +1,53 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <!-- <servlet>
+  	<servlet-name>SelectUser</servlet-name>
+  	<display-name>SelectUser</display-name>
+  	<description></description>
+  	<servlet-class>com.helper.SelectUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SelectUser</servlet-name>
+  	<url-pattern>/selectuser</url-pattern>
+  </servlet-mapping> -->
+  <!-- <servlet>
+  	<servlet-name>SetUser</servlet-name>
+  	<display-name>SetUser</display-name>
+  	<description></description>
+  	<servlet-class>com.helper.SetUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SetUser</servlet-name>
+  	<url-pattern>/setcustomer</url-pattern>
+  </servlet-mapping> -->
+  <!-- <servlet>
+  	<servlet-name>SendEmail</servlet-name>
+  	<display-name>SendEmail</display-name>
+  	<description></description>
+  	<servlet-class>com.entities.SendEmail</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SetUser</servlet-name>
+  	<display-name>SetUser</display-name>
+  	<description></description>
+  	<servlet-class>com.helper.SetUser</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SendEmail</servlet-name>
+  	<url-pattern>/SendEmail</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SetUser</servlet-name>
+  	<url-pattern>/SetUser</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>SelectUser</servlet-name>
+  	<url-pattern>/getcustomer</url-pattern>
+  </servlet-mapping> -->
+</web-app>
