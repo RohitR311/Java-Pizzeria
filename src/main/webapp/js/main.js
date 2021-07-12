@@ -75,21 +75,29 @@ function onCartLoadNumbers() {
 	}
 }
 
-function cartNumbers(product) {
+function cartNumbers(product,action) {
 	/*console.log(product);*/
 
 	let productNumbers = localStorage.getItem('cartNumbers');
+	let cartItems = localStorage.getItem("productsInCart");
+	cartItems = JSON.parse(cartItems);
 
 	productNumbers = parseInt(productNumbers);
+	
+	if (action == "decrease") {
+        localStorage.setItem("cartNumbers", productNumbers - 1);
+        document.querySelector(".nav-item sub span").textContent =
+          productNumbers - 1;
+      } else if (productNumbers) {
+        localStorage.setItem("cartNumbers", productNumbers + 1);
+        document.querySelector(".nav-item sub span").textContent =
+          productNumbers + 1;
+      } else {
+        localStorage.setItem("cartNumbers", 1);
+        document.querySelector(".nav-item sub span").textContent = 1;
+      }
 
-	if (productNumbers) {
-		localStorage.setItem('cartNumbers', productNumbers + 1);
-		document.querySelector(".nav-item sub span").textContent = productNumbers + 1;
-	} else {
-		localStorage.setItem('cartNumbers', 1);
-		document.querySelector(".nav-item sub span").textContent = 1;
-	}
-
+	
 	setItems(product);
 }
 
@@ -122,10 +130,17 @@ function setItems(product) {
 
 
 
-function totalCost(product) {
+function totalCost(product, action) {
 	let cartCost = localStorage.getItem("totalCost");
+	
+	if (action == "decrease") {
+		cartCost = parseInt(cartCost);
+		
+        localStorage.setItem("totalCost", cartCost - product.price);
+        
+      } 
 
-	if (cartCost != null) {
+	else if (cartCost != null) {
 		cartCost = parseInt(cartCost);
 		localStorage.setItem("totalCost", cartCost + product.price);
 	} else {
@@ -155,14 +170,14 @@ function displayCart() {
 					</div>
 					
 				</div>
-				<div class="price" style="margin-top:35px; /*padding-left:100px;*/" >
+				<div class="price" style="margin-top:35px; padding-left:30px;" >
 					&#x20B9;${item.price}
 				</div>
 				
-				<div class="quantity" style="margin-top:35px; /*padding-left:120px;padding-right:10px;*/">
-				
-					${item.inCart}
-			
+				<div class="quantity" style="margin-top:35px; padding-left:5px; /*padding-right:10px;*/">
+					<i class="fas fa-chevron-circle-left mr-1 decrease"></i>
+					<span class="pb-2">${item.inCart}</span>
+					<i class="fas fa-chevron-circle-right ml-1 increase"></i>
 				</div>
 				<div class="total" style="margin-top:35px; /*padding-left:150px;padding-right:10px;*/">
 					&#x20B9;${item.inCart * item.price}
@@ -182,35 +197,15 @@ function displayCart() {
 	productContainer.innerHTML += `
 				<div class="cartTotalContainer">
 					<h2 class="cartTotal" style="text-align: right">
-						Cart Total = &#x20B9;${cartCost}
+						Cart Total = &#x20B9;${cartCost ? cartCost : 0}
 					</div>
 				</div>
 			`
 
 	deleteButtons();
+	manageQuantity();
 }
 
-
-
-/*function removeItemFromCart(clear) {
-	let product = document.getElementById(clear);
-	let totality = localStorage.getItem("totalCost");
-	let productNumbers = localStorage.getItem("cartNumbers");
-	let cartItems = localStorage.getItem("productsInCart");
-	cartItems = JSON.parse(cartItems);	
-
-	productNumbers = parseInt(productNumbers);
-	totality = parseInt(totality);
-	let productCost = parseInt(product.childNodes[7].textContent);
-	let productQuantity = parseInt(product.childNodes[5].textContent);
-	localStorage.setItem("totalCost", totality - productCost);
-	localStorage.setItem("cartNumbers", productNumbers - productQuantity);
-	/*console.log(arrayCart);*/
-/*product.remove();*/
-/*localStorage.removeItem("productsInCart");
-setItemsAgain(foodProducts[i],clear);
-	
-}*/
 
 function deleteButtons() {
 	let deleteButtons = document.querySelectorAll(".products i");
@@ -237,9 +232,63 @@ function deleteButtons() {
 	}
 }
 
-function seeOutput() {
-	console.log("Clcike");
+function manageQuantity() {
+  let decreaseButton = document.querySelectorAll(".decrease");
+  let increaseButton = document.querySelectorAll(".increase");
+  let cartItems = localStorage.getItem("productsInCart");
+  let currentQuantity = 0;
+  let currentProduct = "";
+  cartItems = JSON.parse(cartItems);
+
+  for (let i = 0; i < decreaseButton.length; i++) {
+    decreaseButton[i].addEventListener("click", () => {
+      currentQuantity = decreaseButton[i].parentElement.querySelector("span")
+        .textContent;
+      currentProduct = decreaseButton[
+        i
+      ].parentElement.previousElementSibling.previousElementSibling
+        .querySelector("span")
+        .textContent.toLowerCase()
+        .replace(/ /g, "")
+        .trim();
+
+      if (cartItems[currentProduct].inCart > 1) {
+        cartItems[currentProduct].inCart -= 1;
+        cartNumbers(cartItems[currentProduct], "decrease");
+        totalCost(cartItems[currentProduct], "decrease");
+        localStorage.setItem("productsInCart", JSON.stringify(cartItems));
+        displayCart();
+      }
+    });
+  }
+
+  for (let i = 0; i < increaseButton.length; i++) {
+    increaseButton[i].addEventListener("click", () => {
+      currentQuantity = increaseButton[i].parentElement.querySelector("span")
+        .textContent;
+      currentProduct = increaseButton[
+        i
+      ].parentElement.previousElementSibling.previousElementSibling
+        .querySelector("span")
+        .textContent.toLowerCase()
+        .replace(/ /g, "")
+        .trim();
+
+    
+        cartItems[currentProduct].inCart += 1;
+        cartNumbers(cartItems[currentProduct]);
+        totalCost(cartItems[currentProduct]);
+        localStorage.setItem("productsInCart", JSON.stringify(cartItems));
+        displayCart();
+      
+    });
+  }
 }
+
+function togglePopup() {
+  document.getElementById("popup-1").classList.toggle("active");
+}
+
 
 onCartLoadNumbers();
 displayCart();

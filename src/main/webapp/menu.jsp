@@ -1,3 +1,5 @@
+<%@ page import="com.entities.User"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -40,6 +42,20 @@
 </head>
 
 <body>
+
+	<%
+		try {
+		User u1 = (User) session.getAttribute("user");
+
+		String name = u1.getFirst();
+		System.out.println("Gottttt User" + name);
+
+	} catch (Exception e) {
+		User u1 = new User(0, "Viewer", "visitor@gmail.com", "Viewer", "12346666");
+		session.setAttribute("user", u1);
+	}
+	%>
+
 	<!-- Start header -->
 	<header class="top-navbar">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -61,7 +77,15 @@
 						<li class="nav-item"><a class="nav-link" href="about.jsp">About</a></li>
 						<li class="nav-item"><a class="nav-link" href="register.jsp">Register
 								Now</a></li>
-						<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="loginchecker">
+								<%
+									HttpSession s1 = request.getSession();
+								System.out.println("Checking");
+								User u3 = (User) s1.getAttribute("user");
+								System.out.println("Got User" + u3.getFirst());
+								String s = u3.isLogin() ? "LogOut" : "Login";
+								System.out.println(u3.isLogin());
+								%> <%=s%></a></li>
 						<li class="nav-item"><a class="nav-link" href="cart.jsp"><i
 								class="fas fa-shopping-cart" aria-hidden="true"></i><sub><span>0</span></sub></a></li>
 						<!-- <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact</a></li> -->
@@ -111,14 +135,15 @@
 			<div class="row special-list">
 				<div class="col-lg-4 col-md-6 special-grid drinks">
 					<div class="gallery-single fix">
-						<img src="images/emeraldsalutare.jpg" class="img-fluid" alt="Image">
+						<img src="images/emeraldsalutare.jpg" class="img-fluid"
+							alt="Image">
 						<div class="why-text">
 							<h4>Emerald Salutare</h4>
 							<p>A green smooth drink with health from veges.</p>
 							<h5 class="mt-4">
 								&#x20B9;200 <a style="cursor: pointer;"><i
-									class="add-cart fas fa-shopping-bag" style="color: white; float: right;">
-										</sub>
+									class="add-cart fas fa-shopping-bag"
+									style="color: white; float: right;"> </sub>
 								</i></a>
 							</h5>
 						</div>
@@ -173,7 +198,8 @@
 
 				<div class="col-lg-4 col-md-6 special-grid lunch">
 					<div class="gallery-single fix">
-						<img src="images/mexicanherbpizza.jpg" class="img-fluid" alt="Image">
+						<img src="images/mexicanherbpizza.jpg" class="img-fluid"
+							alt="Image">
 						<div class="why-text">
 							<h4>Mexican Herb Pizza</h4>
 							<p>Filled with fresh continental herbs.</p>
@@ -188,7 +214,8 @@
 
 				<div class="col-lg-4 col-md-6 special-grid lunch">
 					<div class="gallery-single fix">
-						<img src="images/italiancheddarpizza.jpg" class="img-fluid" alt="Image">
+						<img src="images/italiancheddarpizza.jpg" class="img-fluid"
+							alt="Image">
 						<div class="why-text">
 							<h4>Italian Cheddar Pizza</h4>
 							<p>Made with spicy Mouth-watering Italian sauces.</p>
@@ -203,7 +230,8 @@
 
 				<div class="col-lg-4 col-md-6 special-grid dinner">
 					<div class="gallery-single fix">
-						<img src="images/chipotlewinepizza.jpg" class="img-fluid" alt="Image">
+						<img src="images/chipotlewinepizza.jpg" class="img-fluid"
+							alt="Image">
 						<div class="why-text">
 							<h4>Chipotle Wine Pizza</h4>
 							<p>Continental chipotle sauce and aged red wine.</p>
@@ -218,7 +246,8 @@
 
 				<div class="col-lg-4 col-md-6 special-grid dinner">
 					<div class="gallery-single fix">
-						<img src="images/cheeseburstpizza.jpg" class="img-fluid" alt="Image">
+						<img src="images/cheeseburstpizza.jpg" class="img-fluid"
+							alt="Image">
 						<div class="why-text">
 							<h4>Cheese Burst Pizza</h4>
 							<p>Crust with oodles of yummy liquid cheese filled inside.</p>
@@ -380,9 +409,10 @@
 			<div class="row d-flex justify-content-around">
 				<div class="col-lg-3 col-md-6">
 					<h3>About Us</h3>
-					<p>PIZZERIA is a Web-Application for quick customer service. Created by
-						Rohit Rajan,Vedant Tandel,Nilesh Samota,Siddhant Padwankar as part of a Java
-						mini-project in the year 2020 for Semester-3.</p>
+					<p>PIZZERIA is a Web-Application for quick customer service.
+						Created by Rohit Rajan,Vedant Tandel,Nilesh Samota,Siddhant
+						Padwankar as part of a Java mini-project in the year 2020 for
+						Semester-3.</p>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<h3>Opening hours</h3>
@@ -466,7 +496,7 @@
 	<script src="js/form-validator.min.js"></script>
 	<script src="js/contact-form-script.js"></script>
 	<script src="js/custom.js"></script>
-	
-	
+
+
 </body>
 </html>

@@ -1,3 +1,5 @@
+<%@ page import="com.entities.User"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -50,7 +52,8 @@
 }
 
 #submit {
-	margin-top: 10px; width : 150px;
+	margin-top: 10px;
+	width: 150px;
 	padding: 7px 0;
 	font-size: 1.1rem;
 	text-transform: uppercase;
@@ -85,6 +88,20 @@
 </style>
 
 <body>
+
+	<%
+		try {
+		User u1 = (User) session.getAttribute("user");
+
+		String name = u1.getFirst();
+		System.out.println("Gottttt User" + name);
+
+	} catch (Exception e) {
+		User u1 = new User(0, "Viewer", "visitor@gmail.com", "Viewer", "12346666");
+		session.setAttribute("user", u1);
+	}
+	%>
+
 	<!-- Start header -->
 	<header class="top-navbar">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -105,7 +122,15 @@
 						<li class="nav-item"><a class="nav-link" href="about.jsp">About</a></li>
 						<li class="nav-item active"><a class="nav-link"
 							href="register.jsp">Register Now</a></li>
-						<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="loginchecker">
+								<%
+									HttpSession s1 = request.getSession();
+								System.out.println("Checking");
+								User u3 = (User) s1.getAttribute("user");
+								System.out.println("Got User" + u3.getFirst());
+								String s = u3.isLogin() ? "LogOut" : "Login";
+								System.out.println(u3.isLogin());
+								%> <%=s%></a></li>
 						<li class="nav-item"><a class="nav-link" href="cart.jsp"><i
 								class="fas fa-shopping-cart" aria-hidden="true"></i><sub><span>0</span></sub></a></li>
 						<!-- <li class="nav-item"><a class="nav-link"
@@ -189,9 +214,10 @@
 			<div class="row d-flex justify-content-around">
 				<div class="col-lg-3 col-md-6">
 					<h3>About Us</h3>
-					<p>PIZZERIA is a Web-Application for quick customer service. Created by
-						Rohit Rajan,Vedant Tandel,Nilesh Samota,Siddhant Padwankar as part of a Java
-						mini-project in the year 2020 for Semester-3.</p>
+					<p>PIZZERIA is a Web-Application for quick customer service.
+						Created by Rohit Rajan,Vedant Tandel,Nilesh Samota,Siddhant
+						Padwankar as part of a Java mini-project in the year 2020 for
+						Semester-3.</p>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<h3>Opening hours</h3>

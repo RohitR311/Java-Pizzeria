@@ -20,12 +20,14 @@
 /*------------------------------------------------------------------
     SKELETON
 -------------------------------------------------------------------*/
-
 body {
 	color: #666666;
 	font-size: 15px;
 	font-family: 'Athiti', sans-serif;
 	line-height: 1.80857;
+	-webkit-user-select: none; 
+	-ms-user-select: none;
+	user-select: none;
 }
 
 a {
@@ -1431,8 +1433,6 @@ blockquote {
 	font-size: 30px;
 }
 
-
-
 .products-container i {
 	font-size: 25px;
 	color: #d0a772;
@@ -1443,29 +1443,23 @@ blockquote {
 	display: flex;
 	flex-direction: column;
 } */
-
 .products img {
 	width: 90px;
 	height: 90px;
 	object-fit: contain;
 }
 
-
 @media screen and (max-width: 768px) {
 	html {
 		overflow-x: hidden;
 	}
-	
 	.products-container {
 		width: 400px !important;
 	}
-	
 	.product-header {
 		width: 400px !important;
 	}
-	
 	.submit {
 		font-size: 14px !important;
 	}
 }
-

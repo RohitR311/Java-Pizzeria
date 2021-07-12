@@ -1,3 +1,5 @@
+<%@ page import="com.entities.User"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -39,7 +41,50 @@
 
 </head>
 
+<style>
+#submit {
+	width: 100%;
+	padding: 7px 0;
+	font-size: 1.1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5;
+	border-radius: 5px;
+	border: 1px solid #d0a772;
+	transition: 0.6s;
+	width: 150px;
+	background-color: #d0a772;
+	color: #fff;
+	position: relative;
+	left: 35%
+}
+
+#submit:hover {
+	cursor: pointer;
+	background-color: #d0a772;
+	color: #fff;
+	font-size: 1.1rem;
+	transform: scale(1.1);
+}
+</style>
+
 <body style="overflow-x: hidden;">
+
+
+
+
+	<%
+		User u1 = (User) session.getAttribute("user");
+
+	String name = u1.getFirst();
+	System.out.println("Gottttt User" + name);
+
+	if (!u1.isLogin()) {
+		response.sendRedirect("login.jsp");
+	}
+	%>
+	
+
+
 	<!-- Start header -->
 	<header class="top-navbar">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -60,7 +105,15 @@
 						<li class="nav-item"><a class="nav-link" href="about.jsp">About</a></li>
 						<li class="nav-item"><a class="nav-link" href="register.jsp">Register
 								Now</a></li>
-						<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="loginchecker">
+								<%
+									HttpSession s1 = request.getSession();
+								System.out.println("Checking");
+								User u3 = (User) s1.getAttribute("user");
+								System.out.println("Got User" + u3.getFirst());
+								String s = u3.isLogin() ? "LogOut" : "Login";
+								System.out.println(u3.isLogin());
+								%> <%=s%></a></li>
 						<li class="nav-item active"><a class="nav-link"
 							href="cart.jsp"><i class="fas fa-shopping-cart"
 								aria-hidden="true"></i><sub><span>0</span></sub></a></li>
@@ -102,14 +155,42 @@
 			style="width: 100%; justify-content: space-around; /* border-bottom: 1px solid lightgrey; */ padding: 10px 0; align-items: center;"></div>
 		<div class="totalContainer" style="width: 100%;"></div>
 		<div class="subscribe_form mx-auto my-4" style="width: 40%;">
-			<form class="subscribe_form">
-				<!-- <input name="EMAIL" id="subs-email" class="form_input"
-								placeholder="Email Address..." type="email"> -->
-				<button type="submit" class="submit"
-					onClick="window.localStorage.clear()">Proceed
-					to Checkout!</button>
-				<div class="clearfix"></div>
-			</form>
+
+			<button type="button" class="submit" data-toggle="modal"
+				data-target="#exampleModal">Proceed to Checkout!</button>
+			<div class="clearfix"></div>
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Enter your
+						Details:</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="index.jsp"
+						onSubmit="localStorage.clear()">
+						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">Contact
+								Number:</label> <input type="number" class="form-control"
+								id="recipient-name" name="phone">
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="col-form-label">Address:</label>
+							<textarea class="form-control" id="message-text" name="message"></textarea>
+						</div>
+						<input type="submit" value="Submit" id="submit" name="save">
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -149,9 +230,10 @@
 			<div class="row d-flex justify-content-around">
 				<div class="col-lg-3 col-md-6">
 					<h3>About Us</h3>
-					<p>PIZZERIA is a Web-Application for quick customer service. Created by
-						Rohit Rajan,Vedant Tandel,Nilesh Samota,Siddhant Padwankar as part of a Java
-						mini-project in the year 2020 for Semester-3.</p>
+					<p>PIZZERIA is a Web-Application for quick customer service.
+						Created by Rohit Rajan,Vedant Tandel,Nilesh Samota,Siddhant
+						Padwankar as part of a Java mini-project in the year 2020 for
+						Semester-3.</p>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<h3>Opening hours</h3>
@@ -221,6 +303,12 @@
 	<!-- End Footer -->
 
 	<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+	<!-- <script type="text/javascript">
+		function showCart() {
+			alert("Hello");
+		}
+	</script> -->
 
 	<!-- ALL JS FILES -->
 	<script src="js/main.js"></script>

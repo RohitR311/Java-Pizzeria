@@ -29,21 +29,23 @@ public class GetLogin extends HttpServlet {
 
 		String useremail = request.getParameter("emailid");
 		String userpassword = request.getParameter("password");
-		int a = 0;
+		User a = new User(0, "Viewer", "visitor@gmail.com", "Viewer", "1234");
 
 		try {
 			a = logged.checkUser(useremail, userpassword);
-			if (a != 0) {
+			if (a.isLogin()) {
 				System.out.println("logged in");
-				u.setFirst(request.getParameter("firstname"));
+				u.setFirst(a.getFirst());
 				u.setPassword(userpassword);
 				u.setRole("Customer1");
+				u.setLogin(true);
 				u.setEmailid(useremail);
-				u.setUserid(a);
+				u.setUserid(a.getUserid());
 				System.out.println("login successful");
 				session.setAttribute("user", u);
 			}
 			System.out.println(u.getRole());
+			System.out.println(a);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -51,7 +53,7 @@ public class GetLogin extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		if (a != 0) {
+		if (a.isLogin()) {
 			response.sendRedirect("index.jsp");
 		} else {
 

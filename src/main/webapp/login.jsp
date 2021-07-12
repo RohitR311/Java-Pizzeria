@@ -135,7 +135,7 @@
 
 	<div class="heading-title text-center" style="margin-top: 600px;">
 		<h2>Login</h2>
-		<p>Login now to purcahse our food products.</p>
+		<p>Login now to purchase our food products.</p>
 	</div>
 
 	<form action="getcustomer" method="post"
